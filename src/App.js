@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
+
 function App() {
+  
+  const [text,settext] = useState('');
+  const [author,setauthor] = useState('');
+
+  async function randomQuote(){
+    const responce = await fetch("https://api.quotable.io/random");
+    const data = await responce.json();
+    settext(data.content);
+    setauthor(data.author);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="quote-text">Random text :- {text}</div>
+      <div className='quote-author'>Author name :-{author} </div>
+      <button id='new-quote' onClick={randomQuote}>New text</button>
     </div>
   );
 }
